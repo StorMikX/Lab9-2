@@ -48,7 +48,7 @@ def check_in_db(url, name):
         print('Данная запись найдена' + str(name))
     else:
         collection.insert_one(name)
-        print('Запись добавлена в БД' + str(name))
+        print('Запись добавлена в БД' + ' ' + str(name))
 
 
 
