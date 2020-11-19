@@ -44,8 +44,8 @@ def check_in_db(url, name):
     dict2 = {'url': url}
     data = collection.find_one(dict2)
     if data:
-        collection.update_one({'url': url}, {'$set': name})
-        print('Данная запись найдена' + str(name))
+        #collection.update_one({'url': url}, {'$set': name})
+        print('Данная запись существует в БД' +  ' ' +  str(name))
     else:
         collection.insert_one(name)
         print('Запись добавлена в БД' + ' ' + str(name))
