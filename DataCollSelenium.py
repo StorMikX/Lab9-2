@@ -82,12 +82,18 @@ if __name__ == "__main__":
                 delay()
                 fieldsetView = driver.find_elements_by_id('fieldsetView')
                 fieldsetView = fieldsetView[0]
-                field = fieldsetView.find_elements_by_class_name('value')
+                fields = fieldsetView.find_elements_by_class_name('field')
+                
                 Flat = {
-                    'area': field[0].text,
-                    'address': field[1].text,
                     'url': urlAds
                 }
+                for field in fields:
+                    key = field.find_elements_by_class_name('label')
+                    value = field.find_elements_by_class_name('value')
+                    for i in range(len(key)):
+                        if key[i].text == 'Район' or key[i].text == 'Адрес': 
+                            Flat[f'{key[i].text}'] = value[i].text
+
                 check_in_db(urlAds, Flat)
             else:
                 cost = price[0].text
@@ -95,18 +101,22 @@ if __name__ == "__main__":
                 delay()
                 fieldsetView = driver.find_elements_by_id('fieldsetView')
                 fieldsetView = fieldsetView[0]
-                field = fieldsetView.find_elements_by_class_name('value')
+                fields = fieldsetView.find_elements_by_class_name('field')
                 Flat = {
-                    'price': cost,
-                    'area': field[1].text,
-                    'address': field[2].text,
-                    'flat_type': field[3].text,
-                    'space': field[5].text,
-                    'url': urlAds
+                    'url': urlAds,
+                    'price': cost
                 }
+
+                for field in fields:
+                    key = field.find_elements_by_class_name('label')
+                    value = field.find_elements_by_class_name('value')
+                    for i in range(len(key)):
+                        if key[i].text == 'Район' or key[i].text == 'Адрес' or key[i].text == 'Вид квартиры' or key[i].text == 'Площадь по документам':
+                            Flat[f'{key[i].text}'] = value[i].text
+
                 check_in_db(urlAds, Flat)
 
             close_switch_w()
 
         
-            #print(cost)
+        
